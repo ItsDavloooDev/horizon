@@ -32,10 +32,10 @@ const STYLE: [Opt; 4] = [
 const BUTTON_W: f32 = 150.0;
 const BUTTON_H: f32 = 20.0;
 const GAP: f32 = 4.0;
-/// A frame's colour, and the held or hovered one's.
-const FRAME: u32 = 0xB0FF_FFFF;
-const FRAME_HOT: u32 = 0xFFFF_FF55;
-const GUIDE: u32 = 0xFF55_FFFF;
+/// A frame's colour, and the held or hovered one's: signature Lunar Cyan glow.
+const FRAME: u32 = 0x8017_EAD9;
+const FRAME_HOT: u32 = 0xFF17_EAD9;
+const GUIDE: u32 = 0xFF00_E5FF;
 
 /// The buttons' places, in the middle of the screen: style buttons, then Reset and Done.
 fn buttons((w, h): (f32, f32)) -> [(f32, f32); 6] {

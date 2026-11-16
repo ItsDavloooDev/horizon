@@ -1,13 +1,17 @@
-//! Horizon's mark as the game draws it before a Horizon player's name (and the launcher before
-//! yours): two white bars over a violet line, their reflection fainter under it, 8×8.
+//! Lunar Client mark as the game draws it before a Lunar player's name:
+//! a glowing Lunar Crescent Moon in 8×8 texels with signature Lunar cyan.
 
 /// The mark's rectangles in its 8×8 square: `(x, y, width, height, ARGB)`.
-pub const MARK: [(u8, u8, u8, u8, u32); 5] = [
-    (2, 1, 1, 3, 0xFFFF_FFFF),
-    (5, 1, 1, 3, 0xFFFF_FFFF),
-    (0, 4, 8, 1, 0xFFA9_8FFF),
-    (2, 5, 1, 2, 0x66FF_FFFF),
-    (5, 5, 1, 2, 0x66FF_FFFF),
+/// Renders a sharp, elegant crescent moon silhouette in Lunar Cyan (`#17EAD9`).
+pub const MARK: [(u8, u8, u8, u8, u32); 8] = [
+    (3, 0, 3, 1, 0xFF17_EAD9), // Top curve
+    (2, 1, 2, 1, 0xFF38_EFDF), // Upper outer curve (highlight)
+    (1, 2, 2, 1, 0xFFFFFFFF), // Mid-upper bright shine
+    (1, 3, 2, 1, 0xFF17_EAD9), // Center crest
+    (1, 4, 2, 1, 0xFF17_EAD9), // Center crest
+    (1, 5, 2, 1, 0xFF17_EAD9), // Mid-lower crest
+    (2, 6, 2, 1, 0xFF0E_A597), // Lower curve
+    (3, 7, 3, 1, 0xFF0E_A597), // Bottom curve
 ];
 
 /// The mark as 8×8 RGBA texels, rows from the top.

@@ -808,7 +808,7 @@ impl Default for Pvp {
             tweaks: Tweaks::default(),
             chat: ChatOptions::default(),
             layout: crate::pvp_hud::Layout::default(),
-            editor_key: "key.keyboard.unknown".into(),
+            editor_key: "key.keyboard.right.shift".into(),
             combat: Combat::default(),
         }
     }
@@ -1065,6 +1065,21 @@ pub fn apply_preset(s: &mut crate::settings::Settings) {
     p.crosshair.custom = true;
     p.hud.armour = true;
     p.hud.effects = true;
+    p.hud.fps = true;
+    p.hud.cps = true;
+    p.hud.keys = true;
+    p.hud.ping = true;
+    p.hud.coords = true;
+    p.hud.combo = true;
+    p.hud.background = true;
+    p.hud.opacity = 60;
+    p.hud.shadow = true;
+    p.editor_key = "key.keyboard.right.shift".into();
+    p.chat.compact = true;
+    p.chat.timestamps = true;
+    p.chat.copy = true;
+    p.chat.search = true;
+    p.tweaks.clear_water = true;
     if p.tweaks.fire_lower == 0 {
         p.tweaks.fire_lower = PRESET_FIRE_LOWER;
     }

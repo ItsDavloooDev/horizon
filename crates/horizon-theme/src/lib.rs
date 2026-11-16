@@ -13,6 +13,7 @@ use std::time::Duration;
 pub const FONT: &str = "Geist";
 pub const MONO: &str = "Geist Mono";
 pub mod glass;
+pub mod lunar;
 pub mod night;
 
 /// The launcher's and the website's display face (headings, navigation, buttons, badges only):
@@ -84,6 +85,7 @@ pub mod glass_icons {
         "image-01",
         "information-circle",
         "link-01",
+        "lunar-crescent",
         "minus-sign",
         "more-horizontal",
         "more-vertical",

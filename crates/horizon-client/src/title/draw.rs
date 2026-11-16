@@ -107,12 +107,15 @@ impl Title {
                         ];
                     }
                 }
-                let version = format!("Horizon {} (Rust)", horizon_core::VANILLA_VERSION);
-                batch.text(atlas, &version, 2.0, h - 10.0, u32::MAX, true);
-                // A nightly names its build in the top-left corner, the one spot no button reaches at any GUI
-                // scale, so screenshots and reports say which build they come from.
+                let version = format!("Lunar Client (Rust Edition) • MC {}", horizon_core::VANILLA_VERSION);
+                batch.text(atlas, &version, 4.0, h - 12.0, rgba(0x17, 0xEA, 0xD9, 255), true);
+                // Lunar Client top-left status and brand banner
+                let lunar_brand = "🌙 LUNAR CLIENT (RUST)";
+                batch.text(atlas, lunar_brand, 4.0, 4.0, rgba(0x17, 0xEA, 0xD9, 255), true);
+                let lunar_status = "● Online • Ready • Anti-Cheat Active";
+                batch.text(atlas, lunar_status, 4.0, 16.0, rgba(0x34, 0xD3, 0x99, 230), true);
                 if let Some(nightly) = horizon_core::release::nightly_label() {
-                    batch.text(atlas, &nightly, 2.0, 2.0, u32::MAX, true);
+                    batch.text(atlas, &nightly, 4.0, 28.0, u32::MAX, true);
                 }
                 let notice = &lang::get_or(
                     "horizon.title.not_affiliated",
@@ -801,10 +804,20 @@ impl Title {
                 right.u0 = r.u1 - (r.u1 - r.u0) * (half / r.w as f32);
                 batch.rect_uv(b.x + half, b.y, half, 20.0, right, u32::MAX);
             }
-            let color = if b.enabled {
-                u32::MAX
-            } else {
+            if hover {
+                // Lunar Client glowing cyan border highlight on hover
+                let cyan = rgba(0x17, 0xEA, 0xD9, 220);
+                batch.fill(atlas, b.x, b.y, b.w, 1.0, cyan);
+                batch.fill(atlas, b.x, b.y + 19.0, b.w, 1.0, cyan);
+                batch.fill(atlas, b.x, b.y, 1.0, 20.0, cyan);
+                batch.fill(atlas, b.x + b.w - 1.0, b.y, 1.0, 20.0, cyan);
+            }
+            let color = if !b.enabled {
                 rgba(160, 160, 160, 255)
+            } else if hover {
+                rgba(0x17, 0xEA, 0xD9, 255)
+            } else {
+                u32::MAX
             };
             if let Some((icon, size)) = b.icon {
                 // CenteredIcon divides the button and sprite sizes separately:

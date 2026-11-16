@@ -109,17 +109,23 @@ fn recover_issues(dir: &Path) -> [Option<crate::save::DatIssue>; 2] {
 /// `LogoRenderer.extractRenderState`: the logo's top 44 of 64 rows, then the
 /// edition banner's top 14 of 16 rows overlapping its bottom by 7.
 fn draw_logo(atlas: &HudAtlas, batch: &mut HudBatch, w: f32) {
+    let cx = (w / 2.0).floor();
+    // Lunar Client Header Banner & Crescent Moon Emblem
+    let lunar_header = "🌙  L U N A R   C L I E N T";
+    let tw = HudBatch::text_width(atlas, lunar_header);
+    batch.text(atlas, lunar_header, cx - tw / 2.0, 14.0, rgba(0x17, 0xEA, 0xD9, 255), true);
+
     batch.sprite_region(
         atlas,
         "gui/title/minecraft",
-        [(w / 2.0).floor() - 128.0, 30.0, 256.0, 44.0],
+        [cx - 128.0, 28.0, 256.0, 44.0],
         256.0,
         64.0,
     );
     batch.sprite_region(
         atlas,
         crate::title_edition::SPRITE,
-        [(w / 2.0).floor() - 64.0, 30.0 + 44.0 - 7.0, 128.0, 14.0],
+        [cx - 64.0, 28.0 + 44.0 - 7.0, 128.0, 14.0],
         128.0,
         16.0,
     );

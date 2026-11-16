@@ -1,25 +1,23 @@
-//! Horizon's look, given to the engine's extension points at startup (docs/layers.md): the
-//! windows' icon and the colours, sizes and fonts of the menus vanilla doesn't have
-//! (`docs/design-system.md`).
-//! Its own module so it can leave the engine crate as a pure file move, for the official
-//! executable to call.
+//! Lunar Client look, given to the engine's extension points at startup: the
+//! windows' icon and the colours, sizes and fonts of the menus, HUD and overlays
+//! with Lunar Client's signature dark obsidian, glowing cyan accents, and rounded pill aesthetics.
 use horizon_client::menu_style::{
     Fonts, MenuStyle, OverlayColours, SettingsColours, Sizes, Surfaces,
 };
 use horizon_theme as theme;
 
 /// The switch for the menus' look: `vanilla` gives them none, so the settings pages, the HUD
-/// kit's tab strip and the overlays draw in the engine's `NEUTRAL` look, the settings pages on
-/// vanilla's own surfaces (`docs/ui-kit.md`, "Its look").
+/// kit's tab strip and the overlays draw in the engine's `NEUTRAL` look.
 const STYLE_VAR: &str = "HORIZON_MENU_STYLE";
 
-/// Give the engine Horizon's look; call it once, before the first window opens.
+/// Give the engine Lunar Client's look; call it once, before the first window opens.
 pub(crate) fn give() {
     horizon_client::window::set_icon_png(theme::ICON_PNG);
     if std::env::var(STYLE_VAR).is_ok_and(|v| v.eq_ignore_ascii_case("vanilla")) {
         return;
     }
-    let (blocks, dark) = (theme::BLOCKS_DARK, theme::DARK);
+    // Lunar Client styling: Dark obsidian plates, glowing cyan accents, rounded pills
+    let (blocks, dark) = (theme::lunar::LUNAR_BLOCKS, theme::lunar::LUNAR_DARK);
     horizon_client::menu_style::install(MenuStyle {
         settings: SettingsColours {
             page: blocks.page,
@@ -29,22 +27,22 @@ pub(crate) fn give() {
             outline: blocks.outline,
             accent: blocks.accent,
             face: blocks.face,
-            // The face's hover, lighter than `face`: the settings screen's own shade.
-            face_hover: 0x6a50e6,
+            // Lunar Cyan hover glow
+            face_hover: theme::lunar::LUNAR_CYAN_HOVER,
             success: blocks.success,
             warn: blocks.warn,
             danger: blocks.danger,
         },
         overlay: OverlayColours {
             page: dark.page,
-            backdrop_muted: theme::BACKDROP_MUTED,
+            backdrop_muted: 0x161c28,
             ink: dark.ink,
             ink_soft: dark.ink_soft,
             rule: dark.rule,
             accent: dark.accent,
             on_accent: dark.on_accent,
-            lit: theme::night::NIGHT.accent,
-            lit_edge: theme::night::NIGHT.accent_hi,
+            lit: theme::lunar::LUNAR_CYAN,
+            lit_edge: theme::lunar::LUNAR_CYAN_HOVER,
         },
         sizes: Sizes {
             caption: theme::CAPTION.px,
@@ -54,9 +52,10 @@ pub(crate) fn give() {
             title: theme::TITLE.px,
             display: theme::DISPLAY.px,
             micro: theme::MICRO.px,
-            radius: theme::RADIUS,
-            radius_plate: theme::RADIUS_PLATE,
-            control_large: theme::CONTROL_LARGE,
+            // Rounded corners for Lunar pill cards and buttons
+            radius: 10.0,
+            radius_plate: 14.0,
+            control_large: 40.0,
         },
         fonts: Some(Fonts {
             regular: theme::fonts::GEIST_REGULAR,

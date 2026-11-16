@@ -709,8 +709,20 @@ impl Game<'_> {
             let held = k.held[i];
             if held {
                 batch.fill(atlas, kx, ky, w, h, colour(KEY_HELD));
+                // Lunar Client glowing cyan border highlight on active key
+                let cyan = rgba(0x17, 0xEA, 0xD9, 220);
+                batch.fill(atlas, kx, ky, w, 1.0, cyan);
+                batch.fill(atlas, kx, ky + h - 1.0, w, 1.0, cyan);
+                batch.fill(atlas, kx, ky, 1.0, h, cyan);
+                batch.fill(atlas, kx + w - 1.0, ky, 1.0, h, cyan);
             } else if let Some(background) = style.background {
                 batch.fill(atlas, kx, ky, w, h, colour(background));
+                // Lunar subtle card border
+                let border = rgba(0x2A, 0x36, 0x4F, 120);
+                batch.fill(atlas, kx, ky, w, 1.0, border);
+                batch.fill(atlas, kx, ky + h - 1.0, w, 1.0, border);
+                batch.fill(atlas, kx, ky, 1.0, h, border);
+                batch.fill(atlas, kx + w - 1.0, ky, 1.0, h, border);
             }
             let text_colour = colour(if held { KEY_HELD_TEXT } else { style.text });
             let Some((label, lw)) = k.labels.get(i) else {
@@ -776,6 +788,12 @@ impl Game<'_> {
         if let Some(background) = style.background {
             let [a, r, g, b] = background.to_be_bytes();
             batch.fill(atlas, x, y, w, h, rgba(r, g, b, a));
+            // Lunar Client sleek acrylic border
+            let border = rgba(0x2A, 0x36, 0x4F, (a / 2).max(60));
+            batch.fill(atlas, x, y, w, 1.0, border);
+            batch.fill(atlas, x, y + h - 1.0, w, 1.0, border);
+            batch.fill(atlas, x, y, 1.0, h, border);
+            batch.fill(atlas, x + w - 1.0, y, 1.0, h, border);
         }
         let icons = pvp_hud::icon_column(lines);
         let mut top = y + pvp_hud::PAD;
